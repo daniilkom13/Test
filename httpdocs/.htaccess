@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteCond %{HTTP_HOST} ^(www\.)?rainemoney\.fun$ [NC]
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteCond %{REQUEST_URI} !inc/fkassa.php$ [NC]
+RewriteCond %{REQUEST_URI} !sucpay.php [NC]
+RewriteCond %{REQUEST_URI} !danpay.php [NC]
+RewriteRule ^(.*)$ https://rainemoney.fun/$1 [R=301,L]
+
+
+php_flag display_errors on
+php_value error_reporting 0
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !^443$
+RewriteBase /
+
+ErrorDocument 404  /error404.php
+RewriteRule ^reset/([a-zA-Z0-9]+)$ reset.php?id=$1 [L]
+RewriteRule ^game/([a-zA-Z0-9]+)$ game.php?id=$1 [L]
